@@ -36,6 +36,10 @@ keys.shift = keys[16] = {
 keys.ctrl = keys[17] = {
     pressed: false
 };
+keys.esc = keys[27] = {
+    pressed: false
+};
+
 keys.add = function (keyName, keyCode) {
     keys[keyName] = keys[keyCode] = {
         pressed: false

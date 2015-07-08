@@ -69,10 +69,17 @@ Player.prototype.checkcombo = function (skillname) {
 };
 
 Player.prototype.update = function () {
-    this.keypressUP();
+
+    if (document.activeElement == document.body) {
+        this.keypressUP();
+        this.keypressDOWN();
+    }
+
     this.keypressLEFT();
     this.keypressRIGHT();
-    this.keypressDOWN();
+
+    this.keypressENTER();
+    this.keypressESC();
 
     this.interactionMovement();
     this.interactionWalls();
@@ -116,6 +123,8 @@ Player.prototype.keypressLEFT = function () {
     if (keys.left.pressed) {
         if (this.facing === true) this.facing = false;
 
+        if (!this.forceControl()) return;
+
         if (this.speed > 0) {
             if (this.velX > -this.speed) {
                 if (this.jumping) {
@@ -133,6 +142,8 @@ Player.prototype.keypressRIGHT = function () {
 
     if (keys.right.pressed) {
         if (this.facing === false) this.facing = true;
+
+        if (!this.forceControl()) return;
 
         if (this.speed > 0) {
             if (this.velX < this.speed) {
@@ -199,6 +210,42 @@ Player.prototype.keypressDOWN = function () {
     }
 };
 
+Player.prototype.keypressENTER = function () {
+    var TALK_CD = 0.15;
+
+    if (keys.enter.pressed) {
+        if (this.checkcdtime('talk', TALK_CD)) {
+            input = document.getElementById('talk');
+
+            if (document.activeElement == input) {
+                if (input.value.trim() != '') {
+
+                    var chat = new Chat();
+                    chat.init(input.value.trim(), this.x + (this.width / 2), this.y - 15, undefined, undefined, 0.005);
+                    chatbubbles.push(chat);
+
+                    input.value = '';
+                }
+                input.blur();
+            }
+            else {
+                input.focus();
+            }
+
+            this.setcd('talk');
+        }
+    }
+};
+Player.prototype.keypressESC = function () {
+    if (keys.esc.pressed) {
+        input = document.getElementById('talk');
+
+        if (document.activeElement == input) {
+            input.blur();
+        }
+    }
+};
+
 Player.prototype.interactionMovement = function () {
     if (this.jumping) {
         this.velY += gravity;
@@ -226,4 +273,17 @@ Player.prototype.interactionFloor = function () {
         this.jumping = false;
         this.setcombo('dash', 0);
     }
+};
+
+Player.prototype.forceControl = function () {
+    if (document.activeElement != document.body) {
+        input = document.getElementById('talk');
+
+        if (document.activeElement == input && input.value.trim() == '') {
+            input.blur();
+            return true;
+        }
+        else return false;
+    }
+    return true;
 };

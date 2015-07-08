@@ -1,6 +1,8 @@
 var particles = [];
 var particleStore = [];
 
+var chatbubbles = [];
+
 // TODO: create particle generator class to handle intervals to create new particles and pooling
 
 function Dot () {
@@ -52,4 +54,44 @@ Dot.prototype.render = function () {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.globalAlpha = 1;
     }
+};
+
+
+function Chat() {
+    var DFLT_ALPHA = 1;
+    var DFLT_DECAY = 0.1;
+
+    this.text = '';
+
+    this.color = '#000';
+    this.x = 0;
+    this.y = 0;
+
+    this.alpha = DFLT_ALPHA;
+    this.decay = DFLT_DECAY;
+}
+
+Chat.prototype.init = function (text, x, y, color, alpha, decay) {
+    this.text = text;
+    this.x = x;
+    this.y = y;
+    this.color = (typeof color != 'undefined') ? color : this.color;
+    this.alpha = (typeof alpha != 'undefined') ? alpha : this.alpha;
+    this.decay = (typeof decay != 'undefined') ? decay : this.decay;
+};
+
+Chat.prototype.update = function (x, y) {
+    this.alpha = (this.alpha < 0.1) ? 0 : this.alpha - this.decay;
+    this.x = x;
+    this.y = y;
+};
+
+Chat.prototype.render = function () {
+
+    ctx.globalAlpha = this.alpha;
+    var text = this.text;
+    ctx.font = '12px Verdana';
+    ctx.fillText(text, this.x - (ctx.measureText(text).width / 2), this.y + 2);
+    ctx.globalAlpha = 1;
+
 };
