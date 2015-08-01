@@ -220,6 +220,10 @@ Player.prototype.keypressENTER = function () {
             if (document.activeElement == input) {
                 if (input.value.trim() != '') {
 
+                    for (var i = 0; i < chatbubbles.length; i++) {
+                        chatbubbles[i].displace -= 18;
+                    }
+
                     var chat = new Chat();
                     chat.init(input.value.trim(), this.x + (this.width / 2), this.y - 15, undefined, undefined, 0.005);
                     chatbubbles.push(chat);

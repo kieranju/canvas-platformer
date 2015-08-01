@@ -66,6 +66,7 @@ function Chat() {
     this.color = '#000';
     this.x = 0;
     this.y = 0;
+    this.displace = 0;
 
     this.alpha = DFLT_ALPHA;
     this.decay = DFLT_DECAY;
@@ -91,7 +92,7 @@ Chat.prototype.render = function () {
     ctx.globalAlpha = this.alpha;
     var text = this.text;
     ctx.font = '12px Verdana';
-    ctx.fillText(text, this.x - (ctx.measureText(text).width / 2), this.y + 2);
+    ctx.fillText(text, this.x - (ctx.measureText(text).width / 2), this.y + 2 + this.displace);
     ctx.globalAlpha = 1;
 
 };
