@@ -40,22 +40,22 @@ function update () {
         }
     }
 
-    // var dot = new Dot();
-    // dot.init(player.x, player.y, '#13BF83', player.width, player.height, undefined, 0.5, 0.05, 4);
-    // particles.push(dot);
-    // for (var i = 0; i < particles.length; i++) {
-    //     particles[i].update();
-    // }
+    var dot = new Dot();
+    dot.init(player.x, player.y, '#13BF83', player.width, player.height, undefined, 0.5, 0.05, 1);
+    particles.push(dot);
+    for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+    }
 }
 function render () {
     ctx.clearRect(0, 0, width, height);
 
-    // ctx.font = '12px Verdana';
-    // ctx.fillText('combo: ' + player.checkcombo('surge'), 10, 20, 300);
+    ctx.font = '12px Verdana';
+    ctx.fillText('combo: ' + player.checkcombo('surge'), 10, 20, 300);
 
-    // for (var i = 0; i < particles.length; i++) {
-    //     particles[i].render();
-    // }
+    for (var i = 0; i < particles.length; i++) {
+        particles[i].render();
+    }
 
     if (chatbubbles[0] != null) {
         for (var i = 0; i < chatbubbles.length; i++) {

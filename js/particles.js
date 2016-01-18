@@ -56,7 +56,6 @@ Dot.prototype.render = function () {
     }
 };
 
-
 function Chat() {
     var DFLT_ALPHA = 1;
     var DFLT_DECAY = 0.1;
